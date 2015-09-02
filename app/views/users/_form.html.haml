@@ -1,0 +1,29 @@
+= form_for @user do |f|
+  -if @user.errors.any?
+    .msg.error
+      %h2= "При сохранении произошли ошибки"
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :fio
+    = f.text_field :fio, class: "form-control"
+  .form-group
+    = f.label :login
+    = f.text_field :login, class: "form-control"
+  .form-group
+    = f.label :password
+    = f.password_field :password, class: "form-control"
+  .form-group
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation, class: "form-control"
+
+
+  - chckedValue = @user.roles ? @user.roles.split : []
+  .form-group
+    = f.label :roles
+    = f.select :roles, [["Администратор", "admin"], ["Преподаватель", "teacher"], ["Студент", "student"]],{:prompt => "Выберите роли", :selected => chckedValue}
+
+  .actions
+    = f.submit 'Сохранить', class: "btn btn-default"

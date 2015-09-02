@@ -1,0 +1,47 @@
+Rails.application.routes.draw do
+  resources :questions do
+    collection do
+      post 'search'
+      get  'search'
+    end
+  end
+  get 'user_sessions/new'
+
+  get 'user_sessions/create'
+
+  get 'user_sessions/destroy'
+
+  resources :user_sessions
+
+  get 'login' => 'user_sessions#new', :as => :login
+  get 'logout' => 'user_sessions#destroy', :as => :logout
+
+  resources :users
+  resources :knowledges
+
+  resources :questions
+
+  resources :presentations do
+    collection do
+      post 'search'
+      get  'search'
+    end
+  end
+
+
+  post 'checkAnswer', controller: 'questions', action: 'checkAnswer', format: 'json'
+  get 'checkAnswer', controller: 'questions', action: 'checkAnswer', format: 'json'
+  post 'documents.json', controller: 'documents', action: 'create', format: 'json'
+  put 'documents/:id.json', controller: 'documents', action: 'update', format: 'json'
+
+  root 'presentations#index'
+
+  get 'presentations/:id/:slide/show', controller: 'presentations', action: 'show'
+  get 'presentations/:id/statistic', controller: 'presentations', action: 'statistic', :as => :statistic_presentation
+  get 'presentations/:id/:slide/files/:type/*name', controller: 'presentations', action: 'show'
+
+  get 'reload', to: 'presentations#reload'
+
+  get '*any', to: 'presentations#index'
+
+end

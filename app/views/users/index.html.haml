@@ -1,0 +1,24 @@
+%h1 Список пользователей
+
+%table.table
+  %tr
+    %th= User.human_attribute_name(:fio)
+    %th= User.human_attribute_name(:login)
+    %th= User.human_attribute_name(:roles)
+    %th
+    %th
+    %th
+    %th
+
+  - @users.each do |user|
+    %tr
+      %td= user.fio
+      %td= user.login
+      %td= user.roles
+      %td= link_to 'Просмотр', user
+      %td= link_to 'Изменить', edit_user_path(user)
+      %td= link_to 'Удалить', user, :method => :delete, :data => { :confirm => 'Вы уверены?' }
+
+%br
+
+= link_to 'Создать нового пользователя', new_user_path
