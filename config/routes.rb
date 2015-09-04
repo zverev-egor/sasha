@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :welcomes
   match '/new',    to: 'user_sessions#new',    via: 'get'
 
   match '/create',    to: 'user_sessions#create',    via: 'get'
@@ -21,6 +22,6 @@ Rails.application.routes.draw do
 
 
 
-  root 'welcome#index'
+  root 'welcomes#index'
 
 end

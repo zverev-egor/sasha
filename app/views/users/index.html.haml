@@ -1,24 +1,32 @@
-%h1 Список пользователей
+- if current_user.try('admin?')
+  = check_box_tag(:pet_dog)
+  = label_tag(:pet_dog, "I own a dog")
+  
 
-%table.table
-  %tr
-    %th= User.human_attribute_name(:fio)
-    %th= User.human_attribute_name(:login)
-    %th= User.human_attribute_name(:roles)
-    %th
-    %th
-    %th
-    %th
 
-  - @users.each do |user|
+  %h1 Список пользователей
+
+  %table.table
     %tr
-      %td= user.fio
-      %td= user.login
-      %td= user.roles
-      %td= link_to 'Просмотр', user
-      %td= link_to 'Изменить', edit_user_path(user)
-      %td= link_to 'Удалить', user, :method => :delete, :data => { :confirm => 'Вы уверены?' }
+      %th= User.human_attribute_name(:fio)
+      %th= User.human_attribute_name(:login)
+      %th= User.human_attribute_name(:roles)
+      %th
+      %th
+      %th
+      %th
 
-%br
+    - @users.each do |user|
+      %tr
+        %td= user.fio
+        %td= user.login
+        %td= user.roles
+        %td= link_to 'Просмотр', user
+        %td= link_to 'Изменить', edit_user_path(user)
+        %td= link_to 'Удалить', user, :method => :delete, :data => { :confirm => 'Вы уверены?' }
 
-= link_to 'Создать нового пользователя', new_user_path
+  %br
+
+  = link_to 'Создать нового пользователя', new_user_path
+- else
+  %h1 Доступ запрещен

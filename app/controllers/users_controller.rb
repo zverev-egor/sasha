@@ -6,12 +6,14 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
+    @user_teachers = User.where("roles='teacher'").all
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
+    # @user_teacher = User.where("roles='teacher'").find(params[:id])
   end
 
   # GET /users/new
@@ -82,6 +84,8 @@ class UsersController < ApplicationController
         if params[:user][:roles] != 'admin' && params[:user][:roles] != 'student' &&params[:user][:roles] != 'teacher'
           params[:user][:roles] = ''
         end
+      else
+        params[:user][:roles] = 'student'
       end
       params.require(:user).permit(:fio, :login, :password, :password_confirmation, :roles)
     end

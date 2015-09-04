@@ -21,9 +21,14 @@
 
 
   - chckedValue = @user.roles ? @user.roles.split : []
-  .form-group
-    = f.label :roles
-    = f.select :roles, [["Администратор", "admin"], ["Преподаватель", "teacher"], ["Студент", "student"]],{:prompt => "Выберите роли", :selected => chckedValue}
+  - if current_user.try('admin?')
+    .form-group
+      = f.label :roles
+      = f.select :roles, [["Администратор", "admin"], ["Преподаватель", "teacher"], ["Студент", "student"]],{:prompt => "Выберите роли", :selected => chckedValue}
 
+  - if current_user.try('teacher?')
+    .form-group
+      = f.label :roles
+      = f.select :roles, [["Преподаватель", "teacher"], ["Студент", "student"]],{:prompt => "Выберите роли", :selected => chckedValue}
   .actions
     = f.submit 'Сохранить', class: "btn btn-default"
