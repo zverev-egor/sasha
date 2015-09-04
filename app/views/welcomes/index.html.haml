@@ -1,0 +1,30 @@
+%h1.text-center Добро пожаловать
+-#
+-#%table
+-#  %thead
+-#    %tr
+-#      %th Description
+-#      %th
+-#      %th
+-#      %th
+-#
+-#  %tbody
+-#    - @welcomes.each do |welcome|
+-#      %tr
+-#        %td= welcome.description
+-#        %td= link_to 'Show', welcome
+-#        %td= link_to 'Edit', edit_welcome_path(welcome)
+-#        %td= link_to 'Destroy', welcome, :method => :delete, :data => { :confirm => 'Are you sure?' }
+-#
+-#%br
+
+%tbody
+-#- @welcomes.each do |welcome|
+-if @welcomes.count==0
+  %td= link_to 'Новое', new_welcome_path, class: "btn btn-primary"
+-else
+  - @welcomes.each do |welcome|
+    %p= markdown(welcome.description)
+    %td= link_to 'Редактировать', edit_welcome_path(welcome), class: "btn btn-primary"
+    %td= link_to 'Удалить', welcome, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-primary"
+
