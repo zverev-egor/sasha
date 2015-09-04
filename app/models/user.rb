@@ -1,10 +1,6 @@
 class User < ActiveRecord::Base
   authenticates_with_sorcery!
-  has_many  :documents
-  has_many  :presentations
-  has_many  :psessions, :dependent => :delete_all
 
-  serialize :groups, Array
   validates :login, presence: true, uniqueness: true
   validates :roles, presence: true
   validates_presence_of :password, if: :password_required?

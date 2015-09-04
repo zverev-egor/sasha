@@ -5,10 +5,17 @@ Rails.application.routes.draw do
   match '/create',    to: 'user_sessions#create',    via: 'get'
 
   match '/destroy',    to: 'user_sessions#destroy',    via: 'get'
-  # resources :user_sessions
+  resources :user_sessions
   #
-  # get 'login' => 'user_sessions#new', :as => :login
-  # get 'logout' => 'user_sessions#destroy', :as => :logout
+  # get 'user_sessions/new'
+  #
+  # get 'user_sessions/create'
+  #
+  # get 'user_sessions/destroy'
+
+  get 'login' => 'user_sessions#new', :as => :login
+
+  get 'logout' => 'user_sessions#destroy', :as => :logout
 
   resources :users
 
