@@ -39,15 +39,25 @@ class UsersController < ApplicationController
   #     end
   #   end
   # end
+  # def create
+  #   @user = User.new(user_params)
+  #   if @user.save
+  #     flash[:success] = "Welcome to the Sample App!"
+  #     redirect_to @user
+  #   else
+  #     render 'new'
+  #   end
+  # end
   def create
     @user = User.new(user_params)
     if @user.save
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
+      session[:user_id]=@user.id
+      redirect_to root_path, notice: 'Регистрация выполнена'
     else
-      render 'new'
+      render :new
     end
   end
+
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
