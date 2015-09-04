@@ -62,7 +62,9 @@ class WelcomesController < ApplicationController
     end
   end
 
-
+  def show
+    @welcome = Welcome.find(params[:id])
+  end
   # DELETE /welcomes/1
   # DELETE /welcomes/1.json
   def destroy

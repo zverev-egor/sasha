@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :users
   resources :user_sessions
-  resources :welcomes
+  resources :welcomes, only: [:index, :edit, :update, :new, :create, :destroy]
 
   # resources :sessions, only: [:new, :create, :destroy]
   root 'welcomes#index'
@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   # match '/create',    to: 'user_sessions#create',    via: 'get'
   #
   # match '/destroy',    to: 'user_sessions#destroy',    via: 'get'
+
+  match '/new',    to: 'welcomes#new',    via: 'get'
+  match '/create',    to: 'welcomes#create',    via: 'get'
+  match '/destroy',    to: 'welcomes#destroy',    via: 'get'
 
   get 'user_sessions/new'
 
