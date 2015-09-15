@@ -23,9 +23,13 @@ ActiveRecord::Schema.define(version: 20150909110448) do
     t.text     "description"
     t.string   "login"
     t.string   "name"
+    t.integer  "rating"
+    t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id"
 
   create_table "services", force: :cascade do |t|
     t.text     "name"

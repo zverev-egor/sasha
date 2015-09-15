@@ -4,6 +4,8 @@ class CreateReviews < ActiveRecord::Migration
       t.text :description
       t.string :login
       t.string :name
+      t.integer :rating
+      t.belongs_to :user, index: true
 
       t.timestamps null: false
     end

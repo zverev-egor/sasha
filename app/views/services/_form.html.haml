@@ -1,10 +1,5 @@
 = form_for @service do |f|
-  -if @service.errors.any?
-    .msg.error
-      %h2= "При сохранении произошли ошибки"
-      %ul
-        - @service.errors.full_messages.each do |msg|
-          %li= msg
+  =error_messages_for @service
 
   - parentID = !@service.service_id.nil? ? @service.service_id : params[:id].to_i
   = f.hidden_field :service_id, {:value => parentID.to_s}

@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :reviews
   authenticates_with_sorcery!
   has_attached_file :avatar, styles: {medium: '300x300', thumb: '100x100', crug: 'border-radius:50%'}
   validates_attachment :avatar, content_type: {content_type: ['image/jpg','image/jpeg','image/png','image/gif']}

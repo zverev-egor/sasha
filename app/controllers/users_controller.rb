@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  # before_action :admin_user, only: :destroy
+  before_action :admin_user, only: :destroy
   # before_action :only_for_admin
 
   # GET /users
@@ -14,7 +14,8 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
-    # @user_teacher = User.where("roles='teacher'").find(params[:id])
+    # @otziv = Review.where("user_id=current_user.id").all
+    # @user_teacher = Use r.where("roles='teacher'").find(params[:id])
   end
 
   # GET /users/new

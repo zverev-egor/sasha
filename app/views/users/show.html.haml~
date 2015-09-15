@@ -1,0 +1,23 @@
+-#- if current_user.try('admin?')
+.row
+  .col-sm-3
+    -if @user.avatar?
+      =image_tag @user.avatar.url, alt: @user.login
+    %p
+      %b=User.human_attribute_name(:fio)
+      = @user.fio
+
+    %p
+      %b=User.human_attribute_name(:login)
+      = @user.login
+
+    %p
+      %b=User.human_attribute_name(:roles)
+      = @user.roles
+    %p
+      = @otziv.count
+
+= link_to 'Редактировать', edit_user_path(@user), class: "btn btn-default"
+- if current_user.try('admin?')
+  \|
+  = link_to 'Список пользователей', users_path, class: "btn btn-default"
