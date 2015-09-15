@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :admin_user, only: :destroy
+  # before_action :admin_user, only: :destroy
   # before_action :only_for_admin
 
   # GET /users
@@ -52,14 +52,14 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      if current_user.try('admin?') || current_user.try('master?')
-        flash[:success] = 'Регистрация выполнена.'
-        redirect_to root_path
-      else
-        session[:user_id]=@user.id
-        flash[:success] = "Регистрация выполнена."
-        redirect_to root_path
-      end
+      # if current_user.try('admin?') || current_user.try('master?')
+      flash[:success] = 'Регистрация выполнена.'
+      redirect_to root_path
+      # else
+      #   session[:user_id]=@user.id
+      #   flash[:success] = "Регистрация выполнена."
+      #   redirect_to root_path
+      # end
     else
       render :new
     end
