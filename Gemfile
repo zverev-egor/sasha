@@ -114,3 +114,4 @@ gem 'paperclip'
 # всё, что ниже, удалить в универе
 #gem 'tzinfo-data'
 #gem 'tzinfo'
+gem 'puma'
