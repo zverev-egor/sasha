@@ -25,6 +25,7 @@
 -else
   - @welcomes.each do |welcome|
     %p= markdown(welcome.description)
-    %td= link_to 'Редактировать', edit_welcome_path(welcome), class: "btn btn-primary"
-    %td= link_to 'Удалить', welcome, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-primary"
+    - if current_user.try('admin?')
+      %td= link_to 'Редактировать', edit_welcome_path(welcome), class: "btn btn-primary"
+      %td= link_to 'Удалить', welcome, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: "btn btn-primary"
 

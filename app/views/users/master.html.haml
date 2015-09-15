@@ -1,0 +1,92 @@
+-#- if current_user.try('admin?')
+-#  %li= link_to "Все пользователи", users_path
+-#  %li= link_to "Список клиентов", customer_path
+-#  %li= link_to "Список администаторов", admin_path
+-#-if @master.count > 0
+-#
+-#  %h1 Список пользователей
+-#
+-#  %table.table
+-#    %tr
+-#      %th= User.human_attribute_name(:fio)
+-#      %th= User.human_attribute_name(:login)
+-#      %th= User.human_attribute_name(:roles)
+-#      %th
+-#      %th
+-#      %th
+-#      %th
+-#
+-#    - @master.each do |master|
+-#      %tr
+-#        %td= master.fio
+-#        %td= master.login
+-#        %td= master.roles
+-#        %td= link_to 'Просмотр', master
+-#        %td= link_to 'Изменить', edit_user_path(master)
+-#        %td= link_to 'Удалить', master, :method => :delete, :data => { :confirm => 'Вы уверены?' }
+-#
+-#  %br
+-#
+-#-else
+-#  %h3 Нет ниодного мастера
+-#
+-#  = link_to 'Добавить мастера', new_user_path
+-#-#- else
+-#-#  %h1 Доступ запрещен
+
+
+
+
+%h1 Список мастеров
+= paginate @master
+
+
+
+- @master.in_groups_of(3, false) do |master|
+  .row
+    -for p in master
+      %div{id: dom_id(p)}
+        .col-md-4
+          .thumbnail
+            .pppp
+              .row
+                .col-md-6
+                  -if p.avatar?
+                    .div{:style=>"border:1px;border-style: solid;border-radius:15px;margin:1px;width:302px;height:242px;"}
+                      %a{:href=>p.avatar.url, :rel=>"gallery"}
+                        =image_tag p.avatar.url(:medium), alt: p.login, :class=>"margin-photo"
+                -#=link_to p.image.url do
+                -#  =image_tag p.image.url(:thumb), alt: p.name, :class => 'img-rounded'
+                .col-md-6
+                  =p.login
+                  -#%br
+                  -#= link_to "#{p.category.try(:name)}", p.category
+                  -#%br
+                  -#= link_to "#{p.brand.try(:name)}", p.brand
+              .row
+                .col-md-12
+                  %b Описание:
+                  = p.salt
+
+
+
+
+                  %br
+                  = link_to 'Показать', p, class: 'btn btn-primary btn-xs'
+                  %br
+                    -if session[:user_id]
+                      .row
+                        -#%br
+                        -#.col-md-offset-5
+                        -#  = link_to "Добавить к сравнению", add_comparison_path(p), class: 'btn-warning btn-xs'
+                        %br
+                        .col-md-8
+                          = link_to 'Редактировать',  edit_user_path(p),  class: 'btn btn-warning btn-xs'
+                        .col-md
+                          = link_to 'Удалить', p, :method => :delete, :data => { :confirm => 'Вы действительно хотите удалить этот продукт?', remote: true }, class: 'btn btn-warning btn-xs'
+
+
+=paginate @master
+%br
+-if session[:user_id]
+  = link_to 'Новый', new_user_path, :class => "btn btn-primary"

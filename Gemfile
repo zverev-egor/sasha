@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.2.1'
+ruby '2.2.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 
@@ -109,8 +109,8 @@ gem 'sorcery'
 
 # Маркдаун парсер
 gem "redcarpet"
-
-
+# фотки
+gem 'paperclip'
 # всё, что ниже, удалить в универе
 #gem 'tzinfo-data'
 #gem 'tzinfo'

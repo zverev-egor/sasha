@@ -1,6 +1,6 @@
 class WelcomesController < ApplicationController
   before_action :set_welcome, only: [:edit, :update, :destroy]
-
+  before_action :only_for_admin, only: [:edit, :update, :destroy, :create]
   # GET /welcomes
   # GET /welcomes.json
   def index
@@ -10,7 +10,11 @@ class WelcomesController < ApplicationController
 
   # GET /welcomes/new
   def new
-    @welcome = Welcome.new
+    if Welcome.count==0
+      @welcome = Welcome.new
+    else
+      redirect_to root_path
+    end
   end
 
   # GET /welcomes/1/edit
@@ -33,11 +37,16 @@ class WelcomesController < ApplicationController
   #   end
   # end
   def create
-    @welcome = Welcome.new(welcome_params)
-    if @welcome.save
-      redirect_to root_path, notice: 'Главная страница созданна.'
+    if Welcome.count==0
+      @welcome = Welcome.new(welcome_params)
+      if @welcome.save
+        flash[:success] = 'Главная страница созданна.'
+        redirect_to root_path
+      else
+        render :new
+      end
     else
-      render :new
+      redirect_to root_path
     end
   end
 
@@ -56,7 +65,8 @@ class WelcomesController < ApplicationController
   # end
   def update
     if @welcome.update(welcome_params)
-      redirect_to root_path, notice: 'Главная страница изменена'
+      flash[:success] = 'Главная страница изменена'
+      redirect_to root_path
     else
       render :edit
     end
@@ -70,7 +80,8 @@ class WelcomesController < ApplicationController
   def destroy
     @welcome.destroy
     respond_to do |format|
-      format.html { redirect_to welcomes_url, notice: 'Welcome was successfully destroyed.' }
+      flash[:success] = 'Данные с главной страницы удалены.'
+      format.html { redirect_to welcomes_url}
       format.json { head :no_content }
     end
   end

@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
+  resources :reviews
+  resources :contacts
+  resources :services
   resources :users
   resources :user_sessions
-  resources :welcomes, only: [:index, :edit, :update, :new, :create, :destroy]
+  resources :welcomes
 
   # resources :sessions, only: [:new, :create, :destroy]
   root 'welcomes#index'
@@ -16,6 +19,11 @@ Rails.application.routes.draw do
   match '/create',    to: 'welcomes#create',    via: 'get'
   match '/destroy',    to: 'welcomes#destroy',    via: 'get'
 
+  match '/admin', to: 'users#admin', via: 'get'
+  match '/master', to: 'users#master', via: 'get'
+  match '/customer', to: 'users#customer', via: 'get'
+
+
   get 'user_sessions/new'
 
   get 'user_sessions/create'
@@ -24,7 +32,6 @@ Rails.application.routes.draw do
 
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout
-
 
 
   #

@@ -6,21 +6,28 @@ class ApplicationController < ActionController::Base
   private
   def only_for_admin
     if current_user.nil? || !current_user.admin?
-      render :text=>"Доступ запрещен", :layout => 'application'
+      flash[:success] = 'Доступ запрещен.'
+      render :text=>"", :layout => 'application'
     end
   end
   def only_for_teacher
     if current_user.nil? || !current_user.teacher?
-      render :text=>"Доступ запрещен", :layout => 'application'
+      flash[:success] = 'Доступ запрещен.'
+      render :text=>"", :layout => 'application'
     end
   end
   def only_for_student
     if current_user.nil? || !current_user.student?
-      render :text=>"Доступ запрещен", :layout => 'application'
+      flash[:success] = 'Доступ запрещен.'
+      render :text=>"", :layout => 'application'
     end
   end
-
-
+  def only_for_user_nil
+    if current_user.nil?
+      # flash[:success] = 'Доступ запрещен.'
+      redirect_to '/login', :status => :moved_permanently
+    end
+  end
 
   def check_auth
      @current_user = current_user

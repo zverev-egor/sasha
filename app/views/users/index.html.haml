@@ -1,8 +1,7 @@
 - if current_user.try('admin?')
-  = check_box_tag(:pet_dog)
-  = label_tag(:pet_dog, "I own a dog")
-  
-
+  %li= link_to "Список администаторов", admin_path
+  %li= link_to "Список мастеров", master_path
+  %li= link_to "Список клиентов", customer_path
 
   %h1 Список пользователей
 

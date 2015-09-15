@@ -1,34 +1,43 @@
 -#- if current_user.try('admin?') || current_user.try('teacher?')
--#  .navbar
--#    %ul.nav.navbar-nav.navbar-right
--#      -if current_user
--#        %li.dropdown
--#          =link_to ?#,class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
--#            =current_user.login
--#            %span.caret
--#          %ul.dropdown-menu
--#            %li=link_to 'Просмотр'
--#            %li=link_to 'Выход',logout_path
--#      -else
--#        %li=link_to "Вход",login_path
--#        %li=link_to "Регистрация",new_user_path
--#  .navbar.navbar-default
--#    .container
--#      .navbar-header
--#        %ul.nav.navbar-nav
--#          - if current_user.try('admin?')
--#            -#=link_to "Предметы", subjects_path, class: 'navbar-brand'
--#            -#=link_to "Темы", topics_path, class: 'navbar-brand'
--#            -#%li{class: ('active' if controller_name=='group_studs')}=link_to "Группы",group_studs_path, class: 'navbar-brand'
--#            -#%li{class: ('active' if controller_name=='disciplines')}=link_to "Дисциплины",disciplines_path, class: 'navbar-brand'
--#            -#%li{class: ('active' if controller_name=='blocks')}=link_to "Семестр",blocks_path, class: 'navbar-brand'
--#          -#%ul.nav.navbar-nav
--#              -#%li{class: ('active' if controller_name=='tests')}=link_to "Тесты",tests_path, class: 'navbar-brand'
--#              -#%li{class: ('active' if controller_name=='scenarios')}=link_to "Сценарий",scenarios_path, class: 'navbar-brand'
--#
--#      %ul.nav.navbar-nav
--#        - if current_user.try('admin?')
--#          %li{class: ('active' if controller_name=='users')}=link_to "Пользователи",users_path, class: 'glyphicons glyphicons-glass'
+.navbar
+  %ul.nav.navbar-nav.navbar-right
+    -if current_user
+      %li
+        -#-if User.@user.avatar?
+        -#  =image_tag @user.avatar.url(:thumb), alt: @user.login
+      %li.dropdown
+        =link_to ?#,class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
+
+          =current_user.login
+          %span.caret
+        %ul.dropdown-menu
+
+          %li= link_to 'Просмотр', user_path(current_user.id)
+          %li=link_to 'Выход',logout_path
+    -else
+      %li=link_to "Вход",login_path
+      %li=link_to "Регистрация",new_user_path
+.navbar.navbar-default
+  .container
+    .navbar-header
+      %ul.nav.navbar-nav
+        -#- if current_user
+        %li{class: ('active' if controller_name=='welcomes')}=link_to "Главная",welcomes_path, class: 'navbar-brand'
+        %li{class: ('active' if controller_name=='services')}=link_to "Услуги",services_path, class: 'navbar-brand'
+        %li{class: ('active' if controller_name=='contacts')}=link_to "Контакты",contacts_path, class: 'navbar-brand'
+        %li{class: ('active' if controller_name=='reviews')}=link_to "Отзывы",reviews_path, class: 'navbar-brand'
+
+        %li{class: ('active' if controller_name=='users')}=link_to "Наши мастера",master_path, class: 'navbar-brand'
+    -#%li{class: ('active' if controller_name=='group_studs')}=link_to "Группы",group_studs_path, class: 'navbar-brand'
+        -#%li{class: ('active' if controller_name=='disciplines')}=link_to "Дисциплины",disciplines_path, class: 'navbar-brand'
+        -#%li{class: ('active' if controller_name=='blocks')}=link_to "Семестр",blocks_path, class: 'navbar-brand'
+      -#%ul.nav.navbar-nav
+          -#%li{class: ('active' if controller_name=='tests')}=link_to "Тесты",tests_path, class: 'navbar-brand'
+          -#%li{class: ('active' if controller_name=='scenarios')}=link_to "Сценарий",scenarios_path, class: 'navbar-brand'
+
+    %ul.nav.navbar-nav
+      - if current_user.try('admin?')
+        %li{class: ('active' if controller_name=='users')}=link_to "Пользователи",users_path, class: 'glyphicons glyphicons-glass'
 -#-else
 -#  %ul.nav.navbar-nav.navbar-right
 -#    -if current_user
@@ -37,7 +46,7 @@
 -#          =current_user.login
 -#          %span.caret
 -#        %ul.dropdown-menu
--#          %li=link_to 'Просмотр'
+-#          %li=link_to 'Просмотр', user_path(current_user.id)
 -#          %li=link_to 'Выход',logout_path
 -#    -else
 -#      %li=link_to "Вход",login_path

@@ -1,0 +1,42 @@
+-if @service.nil?
+  %h1 Все услуги
+
+-if !@service.nil?
+  %h1
+    =link_to '<-', services_path(:id => @service.service_id)
+    =@service.name
+  %br
+
+-if @services.select{|k| k.is_folder == 1}.length > 0
+  %h5 Название
+  %table.table
+    - @services.select{|k| k.is_folder == 1}.each do |service|
+      %tr
+        %td= link_to service.name, services_path(:id => service.id)
+        %td= link_to 'Изменить', edit_service_path(service)
+        %td= link_to 'Удалить', service, :method => :delete, :data => { :confirm => 'Вы уверены?' }
+  %br
+-if @services.select{|k| k.is_folder != 1}.length > 0
+  %h5 Вопросы
+  %table.table
+    - @services.select{|k| k.is_folder != 1}.each do |service|
+      %tr
+        %td{:style=>"width:70%"}
+          = service.name
+        -#%td{:style=>"width:30%"}
+        -#  %p
+            -#%span=knowledge.getRightAnswerList.join(", ")
+        %td{:style=>"text-align:center;"}
+          = link_to 'Просмотр', service
+          = link_to 'Изменить', edit_service_path(service)
+          = ' '
+          =link_to 'Удалить', service, :method => :delete, :data => { :confirm => 'Вы уверены?' }
+          -#= link_to 'Добавить в презентацию', new_question_path(:knowledge_id => knowledge.id, :select_presentation => 1), {:class => "btn btn-default"}
+  = link_to 'Создать новую услугу в услуге' + ' ' + @service.name, new_service_path(:is_folder => 2, :id => @service.try(:id))
+  %br
+-if @services.select{|k| k.is_folder == 1}.length > 0
+  = link_to 'Создать новую категорию', new_service_path(:is_folder => 1, :id => @service.try(:id))
+  %br
+
+
+

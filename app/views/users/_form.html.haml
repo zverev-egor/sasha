@@ -1,4 +1,4 @@
-= form_for @user do |f|
+= form_for @user, :html => {:multipart => true} do |f|
   -if @user.errors.any?
     .msg.error
       %h2= "При сохранении произошли ошибки"
@@ -18,17 +18,20 @@
   .form-group
     = f.label :password_confirmation
     = f.password_field :password_confirmation, class: "form-control"
+  .form-group
+    = f.label :avatar
+    = f.file_field :avatar
 
 
   - chckedValue = @user.roles ? @user.roles.split : []
   - if current_user.try('admin?')
     .form-group
       = f.label :roles
-      = f.select :roles, [["Администратор", "admin"], ["Преподаватель", "teacher"], ["Студент", "student"]],{:prompt => "Выберите роли", :selected => chckedValue}
+      = f.select :roles, [["Администратор", "admin"], ["Мастер", "master"], ["Клиент", "customer"]],{:prompt => "Выберите роли", :selected => chckedValue}
 
-  - if current_user.try('teacher?')
+  - if current_user.try('master?')
     .form-group
       = f.label :roles
-      = f.select :roles, [["Преподаватель", "teacher"], ["Студент", "student"]],{:prompt => "Выберите роли", :selected => chckedValue}
+      = f.select :roles, [["Мастер", "master"], ["Клиент", "customer"]],{:prompt => "Выберите роли", :selected => chckedValue}
   .actions
     = f.submit 'Сохранить', class: "btn btn-default"

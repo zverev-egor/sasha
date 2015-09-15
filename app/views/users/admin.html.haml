@@ -1,0 +1,35 @@
+- if current_user.try('admin?')
+  %li= link_to "Все пользователи", users_path
+  %li= link_to "Список мастеров", master_path
+  %li= link_to "Список клиентов", customer_path
+  -if @admin.count > 0
+
+    %h1 Список пользователей
+
+    %table.table
+      %tr
+        %th= User.human_attribute_name(:fio)
+        %th= User.human_attribute_name(:login)
+        %th= User.human_attribute_name(:roles)
+        %th
+        %th
+        %th
+        %th
+
+      - @admin.each do |admin|
+        %tr
+          %td= admin.fio
+          %td= admin.login
+          %td= admin.roles
+          %td= link_to 'Просмотр', admin
+          %td= link_to 'Изменить', edit_user_path(admin)
+          %td= link_to 'Удалить', admin, :method => :delete, :data => { :confirm => 'Вы уверены?' }
+
+    %br
+
+    = link_to 'Создать нового пользователя', new_user_path
+  -else
+    %h3 Нет ниодного администратора
+- else
+  %h1 Доступ запрещен
+

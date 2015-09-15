@@ -1,12 +1,13 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :admin_user, only: :destroy
   # before_action :only_for_admin
 
   # GET /users
   # GET /users.json
   def index
     @users = User.all
-    @user_teachers = User.where("roles='teacher'").all
+    # @user_teachers = User.where("roles='teacher'").all
   end
 
   # GET /users/1
@@ -51,8 +52,14 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      session[:user_id]=@user.id
-      redirect_to root_path, notice: 'Регистрация выполнена'
+      if current_user.try('admin?') || current_user.try('master?')
+        flash[:success] = 'Регистрация выполнена.'
+        redirect_to root_path
+      else
+        session[:user_id]=@user.id
+        flash[:success] = "Регистрация выполнена."
+        redirect_to root_path
+      end
     else
       render :new
     end
@@ -63,7 +70,8 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to users_path, notice: 'Пользователь успешно изменен.' }
+        flash[:success] = 'Пользователь успешно изменен.'
+        format.html { redirect_to users_path}
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -74,11 +82,37 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   # DELETE /users/1.json
+
+  # def destroy
+  #   @user.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to users_url, notice: 'Пользователь успешно удален.' }
+  #     format.json { head :no_content }
+  #   end
+  # end
   def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'Пользователь успешно удален.' }
-      format.json { head :no_content }
+    User.find(params[:id]).destroy
+    flash[:success] = "Пользователь успешно удален."
+    redirect_to users_url
+  end
+
+  def admin
+    if current_user.try('admin?')
+      @admin = User.where("roles=?", 'admin').all
+    # else
+    #   flash[:success] = "Вы не админ!"
+    end
+  end
+  def master
+      @master = User.where("roles=?", 'master').page(params[:page]).per(10)
+    # else
+    #   flash[:success] = "Вы не админ!"
+  end
+  def customer
+    if current_user.try('admin?')
+      @customer = User.where("roles=?", 'customer').all
+    # else
+      # flash[:success] = "Вы не админ!"
     end
   end
 
@@ -91,12 +125,15 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       if !params[:user][:roles].nil?
-        if params[:user][:roles] != 'admin' && params[:user][:roles] != 'student' &&params[:user][:roles] != 'teacher'
+        if params[:user][:roles] != 'admin' && params[:user][:roles] != 'customer' &&params[:user][:roles] != 'master'
           params[:user][:roles] = ''
         end
       else
-        params[:user][:roles] = 'student'
+        params[:user][:roles] = 'customer'
       end
-      params.require(:user).permit(:fio, :login, :password, :password_confirmation, :roles)
+      params.require(:user).permit(:fio, :login, :password, :password_confirmation, :roles, :avatar)
     end
+  def admin_user
+    redirect_to(root_url) unless current_user.admin?
+  end
 end

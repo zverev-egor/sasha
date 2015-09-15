@@ -12,6 +12,7 @@ class UserSessionsController < ApplicationController
     end
   end
 
+
   def destroy
     logout
     redirect_to(:root, notice: 'Вы успешно вышли.')

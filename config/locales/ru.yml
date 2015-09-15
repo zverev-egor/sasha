@@ -291,35 +291,32 @@ ru:
       question: "Вопрос"
       user: "Пользователь"
     attributes:
-      presentation:
-        last_open_slide: 'Последний видимый слайд'
-      question:
-        name: 'Вопрос'
-        answer_type: 'Тип ответа'
-        answer_array: 'Ответы'
-        presentation: 'Презентация'
-        presentation_id: 'Презентация'
-        position: 'После слайда'
-      knowledge:
-        name: 'Название категории/Вопрос'
-        answer_type: 'Тип ответа'
-        answer_array: 'Ответы'
-        presentation: 'Презентация'
-        presentation_id: 'Презентация'
-        position: 'После слайда'
+      contact:
+        phone_array: 'Номер телефона'
+        whatsapp: 'Номер whatsapp'
+        skype: 'skype'
+        email: 'email'
+        opening_hours: 'Часы работы'
+        address: 'Адрес'
+        description: 'Описание'
+      review:
+        description: 'Описание'
+        login: 'Логин'
+        name: 'Фамилия Имя'
+      service:
+        name: 'Название'
+        description: 'Описание'
+      welcomes:
+        description: 'Описание'
       user:
         login: "Логин"
-        username: "Логин"
-        fio: "Инициалы"
-        group: "Группка (актуально только для роли студента)"
+        fio: "ФИО"
         roles: "Роль"
         password: "Пароль"
         password_confirmation: "Пароль (повторно)"
-
   support:
     select:
       prompt: "Выберите: "
-
     array:
       # Rails 2.2
       sentence_connector: "и"
@@ -329,6 +326,12 @@ ru:
       words_connector: ", "
       two_words_connector: " и "
       last_word_connector: " и "
+  helpers:
+    sure: Вы уверены?
+    submit:
+      create: Сохранить
+      submit: Сохранить
+      update: Сохранить
   views:
      pagination:
         previous: "&laquo; Назад"

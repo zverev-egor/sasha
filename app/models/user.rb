@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   authenticates_with_sorcery!
-
+  has_attached_file :avatar, styles: {medium: '300x300', thumb: '100x100', crug: 'border-radius:50%'}
+  validates_attachment :avatar, content_type: {content_type: ['image/jpg','image/jpeg','image/png','image/gif']}
   validates :login, presence: true, uniqueness: true
   validates :roles, presence: true
   validates_presence_of :password, if: :password_required?
@@ -10,11 +11,11 @@ class User < ActiveRecord::Base
   def admin?
     self.roles && self.roles.include?("admin")
   end
-  def teacher?
-    self.roles && self.roles.include?("teacher")
+  def master?
+    self.roles && self.roles.include?("master")
   end
-  def student?
-    self.roles && self.roles.include?("student")
+  def customer?
+    self.roles && self.roles.include?("customer")
   end
 
   private
