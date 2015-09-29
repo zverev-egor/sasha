@@ -1,31 +1,50 @@
-- if current_user.try('admin?')
-  %li= link_to "Список администаторов", admin_path
-  %li= link_to "Список мастеров", master_path
-  %li= link_to "Список клиентов", customer_path
+-#- if current_user.try('admin?')
+-#  %li= link_to "Список администаторов", admin_path
+-#  %li= link_to "Список мастеров", master_path
+-#  %li= link_to "Список клиентов", customer_path
+-#
+-#  %h1 Список пользователей
+-#
+-#  %table.table
+-#    %tr
+-#      %th= User.human_attribute_name(:fio)
+-#      %th= User.human_attribute_name(:login)
+-#      %th= User.human_attribute_name(:roles)
+-#      %th
+-#      %th
+-#      %th
+-#      %th
+-#
+-#    - @users.each do |user|
+-#      %tr
+-#        %td= user.fio
+-#        %td= user.login
+-#        %td= user.roles
+-#        %td= link_to 'Просмотр', user
+-#        %td= link_to 'Изменить', edit_user_path(user)
+-#        %td= link_to 'Удалить', user, :method => :delete, :data => { :confirm => 'Вы уверены?' }
+-#
+-#  %br
+-#
+-#  = link_to 'Создать нового пользователя', new_user_path
+-#- else
+-#  %h1 Доступ запрещен
 
-  %h1 Список пользователей
-
-  %table.table
-    %tr
-      %th= User.human_attribute_name(:fio)
-      %th= User.human_attribute_name(:login)
-      %th= User.human_attribute_name(:roles)
-      %th
-      %th
-      %th
-      %th
-
-    - @users.each do |user|
-      %tr
-        %td= user.fio
-        %td= user.login
-        %td= user.roles
-        %td= link_to 'Просмотр', user
-        %td= link_to 'Изменить', edit_user_path(user)
-        %td= link_to 'Удалить', user, :method => :delete, :data => { :confirm => 'Вы уверены?' }
-
-  %br
-
-  = link_to 'Создать нового пользователя', new_user_path
-- else
-  %h1 Доступ запрещен
+.page-header
+  %h1
+    Персоны
+    - if current_user.try('admin?')
+      =link_to new_user_path,class: 'btn btn-primary' do
+        =fa_icon 'plus'
+.list-group
+  -@users.each do |user|
+    .list-group-item
+      .pull-right
+        =link_to edit_user_path(user), class: 'btn btn-primary btn-sm' do
+          =fa_icon 'edit'
+        =link_to user, method: :delete, data: {confirm: t('helpers.sure')}, class: 'btn btn-danger btn-sm' do
+          =fa_icon 'trash-o'
+      %h4=user.login
+      .text-muted=user.roles
+      .clearfix
+=paginate @users

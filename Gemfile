@@ -115,3 +115,7 @@ gem 'paperclip'
 #gem 'tzinfo-data'
 #gem 'tzinfo'
 gem 'puma'
+
+
+gem 'httparty'
+gem 'mechanize'

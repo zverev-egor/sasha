@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
+    @users = User.ordering.page(params[:page])
     # @user_teachers = User.where("roles='teacher'").all
   end
 
@@ -53,14 +54,14 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      # if current_user.try('admin?') || current_user.try('master?')
-      flash[:success] = 'Регистрация выполнена.'
-      redirect_to root_path
-      # else
-      #   session[:user_id]=@user.id
-      #   flash[:success] = "Регистрация выполнена."
-      #   redirect_to root_path
-      # end
+      if current_user.try('admin?') || current_user.try('master?')
+      flash[:success] = 'Пользователь создан.'
+      redirect_to users_path
+      else
+        session[:user_id]=@user.id
+        flash[:success] = "Регистрация выполнена."
+        redirect_to root_path
+      end
     else
       render :new
     end

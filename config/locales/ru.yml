@@ -333,10 +333,9 @@ ru:
       submit: Сохранить
       update: Сохранить
   views:
-     pagination:
-        previous: "&laquo; Назад"
-        next: "Вперед &raquo;"
-        first: "На первую"
-        last: "На последнюю"
-        truncate: "..."
-
+    pagination:
+      first: ⇤
+      last: ⇥
+      previous: ←
+      next: →
+      truncate: …

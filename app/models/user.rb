@@ -9,6 +9,9 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, if: :password_required?
   validates_length_of :password, within: 5..255, allow_blank: true
 
+  scope :ordering,->{order(:login)}
+
+
   def admin?
     self.roles && self.roles.include?("admin")
   end

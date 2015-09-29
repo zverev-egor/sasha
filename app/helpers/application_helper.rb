@@ -4,6 +4,11 @@ module ApplicationHelper
     render 'layouts/error_messages_for', object: object
   end
 
+  def awesom(klass, hash = {})
+    content_tag(:i, "", class: klass, data: hash[:data],
+                title: hash[:title]).html_safe + hash[:text]
+  end
+
   def markdown(text)
     renderer = Redcarpet::Render::HTML.new(hard_wrap: true, filter_html: true)
     options = {
