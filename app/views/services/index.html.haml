@@ -6,15 +6,17 @@
     =link_to '<-', services_path(:id => @service.service_id)
     =@service.name
   %br
-
--if @services.select{|k| k.is_folder == 1}.length > 0
-  %h5 Название
-  %table.table
+.list-group
+  -if @services.select{|k| k.is_folder == 1}.length > 0
+    %h5 Название
     - @services.select{|k| k.is_folder == 1}.each do |service|
-      %tr
-        %td= link_to service.name, services_path(:id => service.id)
-        %td= link_to 'Изменить', edit_service_path(service)
-        %td= link_to 'Удалить', service, :method => :delete, :data => { :confirm => 'Вы уверены?' }
+      .list-group-item
+        .pull-right
+          = link_to edit_service_path(service), class: 'btn btn-primary btn-sm' do
+            =fa_icon 'edit'
+          = link_to service, :method => :delete, :data => { :confirm => 'Вы уверены?' }, class: 'btn btn-danger btn-sm' do
+            =fa_icon 'trash-o'
+        %h4= link_to service.name, services_path(:id => service.id)
   %br
 -if @services.select{|k| k.is_folder != 1}.length > 0
   %h5 Вопросы

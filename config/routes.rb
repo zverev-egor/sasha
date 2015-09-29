@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :records
   resources :reviews
   resources :contacts
   resources :services
@@ -32,7 +33,6 @@ Rails.application.routes.draw do
 
   get 'login' => 'user_sessions#new', :as => :login
   get 'logout' => 'user_sessions#destroy', :as => :logout
-
 
   #
   # get 'user_sessions/new'

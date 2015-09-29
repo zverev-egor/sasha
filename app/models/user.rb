@@ -1,4 +1,11 @@
 class User < ActiveRecord::Base
+  has_and_belongs_to_many :records, ->{order(:fio)}
+  has_many :produced_records, ->{order(:fio)}, class_name: 'Record', foreign_key: :master_id
+
+
+  include PgSearch
+  pg_search_scope :search_everywhere, against: [:login, :name]
+
   has_many :reviews
   authenticates_with_sorcery!
   has_attached_file :avatar, styles: {medium: '300x300', thumb: '100x100', crug: 'border-radius:50%'}
@@ -26,4 +33,6 @@ class User < ActiveRecord::Base
   def password_required?
     self.new_record? || password.present? || password_confirmation.present?
   end
+
+
 end

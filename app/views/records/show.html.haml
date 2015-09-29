@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Fio:
+  = @record.fio
+%p
+  %b Number:
+  = @record.number
+%p
+  %b Data:
+  = @record.data
+%p
+  %b Time:
+  = @record.time
+
+= link_to 'Edit', edit_record_path(@record)
+\|
+= link_to 'Back', records_path

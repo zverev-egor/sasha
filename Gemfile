@@ -119,3 +119,5 @@ gem 'puma'
 
 gem 'httparty'
 gem 'mechanize'
+
+gem 'pg_search'

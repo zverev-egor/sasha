@@ -11,12 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150909110448) do
+ActiveRecord::Schema.define(version: 20150929123207) do
 
   create_table "contacts", force: :cascade do |t|
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "records", force: :cascade do |t|
+    t.string   "fio"
+    t.string   "number"
+    t.date     "data"
+    t.time     "time"
+    t.integer  "user_id"
+    t.integer  "master_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "records", ["master_id"], name: "index_records_on_master_id"
+  add_index "records", ["user_id"], name: "index_records_on_user_id"
+
+  create_table "records_services", id: false, force: :cascade do |t|
+    t.integer "record_id",  null: false
+    t.integer "service_id", null: false
   end
 
   create_table "reviews", force: :cascade do |t|

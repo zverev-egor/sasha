@@ -6,6 +6,7 @@ class CreateServices < ActiveRecord::Migration
       t.integer :is_folder
       t.integer :service_id
 
+
       t.timestamps null: false
     end
   end

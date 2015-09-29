@@ -30,21 +30,24 @@
 -#- else
 -#  %h1 Доступ запрещен
 
-.page-header
-  %h1
-    Персоны
-    - if current_user.try('admin?')
-      =link_to new_user_path,class: 'btn btn-primary' do
-        =fa_icon 'plus'
-.list-group
-  -@users.each do |user|
-    .list-group-item
-      .pull-right
-        =link_to edit_user_path(user), class: 'btn btn-primary btn-sm' do
-          =fa_icon 'edit'
-        =link_to user, method: :delete, data: {confirm: t('helpers.sure')}, class: 'btn btn-danger btn-sm' do
-          =fa_icon 'trash-o'
-      %h4=user.login
-      .text-muted=user.roles
-      .clearfix
-=paginate @users
+- if current_user.try('admin?')
+  .page-header
+    %h1
+      Пользователи
+      - if current_user.try('admin?')
+        =link_to new_user_path,class: 'btn btn-primary' do
+          =fa_icon 'plus'
+  .list-group
+    -@users.each do |user|
+      .list-group-item
+        .pull-right
+          =link_to user, class: 'btn btn-primary btn-sm' do
+            =fa_icon 'eye'
+          =link_to edit_user_path(user), class: 'btn btn-primary btn-sm' do
+            =fa_icon 'edit'
+          =link_to user, method: :delete, data: {confirm: t('helpers.sure')}, class: 'btn btn-danger btn-sm' do
+            =fa_icon 'trash-o'
+        %h4=link_to user.login,user
+        .text-muted=user.roles
+        .clearfix
+  =paginate @users
