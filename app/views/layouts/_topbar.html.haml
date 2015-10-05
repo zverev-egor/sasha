@@ -23,6 +23,7 @@
       %ul.nav.navbar-nav
         -#- if current_user
         %li{class: ('active' if controller_name=='welcomes')}=link_to "Главная",welcomes_path, class: 'navbar-brand'
+        %li{class: ('active' if controller_name=='records')}=link_to "Запись",records_path, class: 'navbar-brand'
         %li{class: ('active' if controller_name=='services')}=link_to "Услуги",services_path, class: 'navbar-brand'
         %li{class: ('active' if controller_name=='contacts')}=link_to "Контакты",contacts_path, class: 'navbar-brand'
         %li{class: ('active' if controller_name=='reviews')}=link_to "Отзывы",reviews_path, class: 'navbar-brand'

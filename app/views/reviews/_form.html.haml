@@ -1,15 +1,26 @@
 = form_for @review do |f|
   =error_messages_for @review
 
-  .form-group
+  -#.form-group
+  -#  = f.label :description
+  -#  = f.text_area :description
+  -#- if !current_user
+  -#  .form-group
+  -#    = f.label :login
+  -#    = f.text_field :login
+  -#.form-group
+  -#  = f.label :name
+  -#  = f.text_field :name
+  -#.form-group
+  -#  = f.submit 'Save'
+
+  - if current_user.nil?
+    .field
+      = f.label :name
+      = f.text_field :name
+
+  .field
     = f.label :description
     = f.text_area :description
-  - if !current_user
-    .form-group
-      = f.label :login
-      = f.text_field :login
-  .form-group
-    = f.label :name
-    = f.text_field :name
-  .form-group
-    = f.submit 'Save'
+  .actions
+    = f.submit nil, class: 'btn btn-primary'

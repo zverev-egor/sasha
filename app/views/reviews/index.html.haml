@@ -1,25 +1,45 @@
-%h1 Отзывы
+-#%h1 Отзывы
+-#
+-#%table
+-#  %thead
+-#    %tr
+-#      %th Description
+-#      %th Login
+-#      %th Name
+-#      %th
+-#      %th
+-#      %th
+-#
+-#  %tbody
+-#    - @reviews.each do |review|
+-#      %tr
+-#        %td= review.description
+-#        %td= review.login
+-#        %td= review.name
+-#        %td= link_to 'Show', review
+-#        %td= link_to 'Edit', edit_review_path(review)
+-#        %td= link_to 'Destroy', review, :method => :delete, :data => { :confirm => 'Are you sure?' }
+-#
+-#%br
+-#
+-#= link_to 'New Review', new_review_path
 
-%table
-  %thead
-    %tr
-      %th Description
-      %th Login
-      %th Name
-      %th
-      %th
-      %th
 
-  %tbody
-    - @reviews.each do |review|
-      %tr
-        %td= review.description
-        %td= review.login
-        %td= review.name
-        %td= link_to 'Show', review
-        %td= link_to 'Edit', edit_review_path(review)
-        %td= link_to 'Destroy', review, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-%br
+-if @review.nil?
+  %h1 Все услуги
 
-= link_to 'New Review', new_review_path
+  - if current_user.try('admin?')
+    .list-group
+      - @reviews.each do |review|
+        .list-group-item
+          .pull-right
+            = link_to edit_review_path(review), class: 'btn btn-primary btn-sm' do
+              =fa_icon 'edit'
+            = link_to review, :method => :delete, :data => { :confirm => 'Вы уверены?' }, class: 'btn btn-danger btn-sm' do
+              =fa_icon 'trash-o'
+          %h6= link_to review.description
+  -else
+    
+- else
+  %h1 Пусто

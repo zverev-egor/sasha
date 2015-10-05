@@ -25,17 +25,14 @@ class ReviewsController < ApplicationController
   # POST /reviews.json
   def create
     @review = Review.new(review_params)
-
-    respond_to do |format|
-      if @review.save
-        format.html { redirect_to @review, notice: 'Review was successfully created.' }
-        format.json { render :show, status: :created, location: @review }
-      else
-        format.html { render :new }
-        format.json { render json: @review.errors, status: :unprocessable_entity }
-      end
+   if @review.save
+       flash[:success] = 'Отзыв добавлен.'
+       redirect_to @review
+    else
+      render :new
     end
   end
+
 
   # PATCH/PUT /reviews/1
   # PATCH/PUT /reviews/1.json
@@ -72,6 +69,7 @@ class ReviewsController < ApplicationController
       if current_user
         params[:review][:user_id] = current_user.id
         params[:review][:login] = current_user.login
+        params[:review][:name] = current_user.fio
       end
       params.require(:review).permit(:description, :login, :name, :user_id, :rating)
     end

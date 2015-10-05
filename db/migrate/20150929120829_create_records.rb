@@ -7,7 +7,6 @@ class CreateRecords < ActiveRecord::Migration
       t.time :time
 
       t.belongs_to :user, index: true
-      t.belongs_to :master, index: true
 
       t.timestamps null: false
     end

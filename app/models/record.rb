@@ -1,6 +1,4 @@
 class Record < ActiveRecord::Base
+  has_and_belongs_to_many :services
   belongs_to :user
-  belongs_to :master, class_name: 'User'
-
-  validates :master, presence: true
 end

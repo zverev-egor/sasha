@@ -34,11 +34,13 @@
           = ' '
           =link_to 'Удалить', service, :method => :delete, :data => { :confirm => 'Вы уверены?' }
           -#= link_to 'Добавить в презентацию', new_question_path(:knowledge_id => knowledge.id, :select_presentation => 1), {:class => "btn btn-default"}
-  = link_to 'Создать новую услугу в услуге' + ' ' + @service.name, new_service_path(:is_folder => 2, :id => @service.try(:id))
-  %br
--if @services.select{|k| k.is_folder == 1}.length > 0
-  = link_to 'Создать новую категорию', new_service_path(:is_folder => 1, :id => @service.try(:id))
-  %br
+-if !@service.nil?
+  = link_to 'Создать новую услугу в категории' + ' ' + @service.name, new_service_path(:is_folder => 2, :id => @service.try(:id))
+%br
+-if @services.select{|k| k.is_folder == 1}.length >= 0
+  -if @service.nil?
+    = link_to 'Создать новую категорию', new_service_path(:is_folder => 1, :id => @service.try(:id))
+    %br
 
 
 

@@ -25,12 +25,10 @@ ActiveRecord::Schema.define(version: 20150929123207) do
     t.date     "data"
     t.time     "time"
     t.integer  "user_id"
-    t.integer  "master_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "records", ["master_id"], name: "index_records_on_master_id"
   add_index "records", ["user_id"], name: "index_records_on_user_id"
 
   create_table "records_services", id: false, force: :cascade do |t|
